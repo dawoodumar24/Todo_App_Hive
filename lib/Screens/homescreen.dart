@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_todo_app/utils/dialog_box.dart';
 import 'package:hive_todo_app/utils/todo_tile.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,6 +10,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  final _controller =TextEditingController();
+
   List TodoList = [
     ["Make tutorials", false],
     ["Do Exercise", false],
@@ -17,6 +21,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void checkBoxChanged(bool? value, int index) {
     setState(() {
       TodoList[index][1] = !TodoList[index][1];
+    });
+  }
+
+  void createNewTask(){
+     showDialog(context: context, builder: (context){
+      return DialogBox(controller: _controller,);
     });
   }
 
@@ -35,6 +45,11 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         itemCount: TodoList.length,
       ),
+      floatingActionButton: FloatingActionButton(backgroundColor: Colors.yellow,
+        onPressed: (){
+        return createNewTask();
+        },
+        child: Icon(Icons.add, color: Colors.black,),),
     );
   }
 }
